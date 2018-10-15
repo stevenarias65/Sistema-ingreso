@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="DB_A1E868_ingresoCTPModelStoreContainer" CdmEntityContainer="DB_A1E868_ingresoCTPEntities">
+    <EntitySetMapping Name="Colegio">
+      <EntityTypeMapping TypeName="DB_A1E868_ingresoCTPModel.Colegio">
+        <MappingFragment StoreEntitySet="Colegio">
+          <ScalarProperty Name="Id_Colegio" ColumnName="Id_Colegio" />
+          <ScalarProperty Name="nombre_colegio" ColumnName="nombre_colegio" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+          <ScalarProperty Name="url_imagen" ColumnName="url_imagen" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="departamentos">
+      <EntityTypeMapping TypeName="DB_A1E868_ingresoCTPModel.departamentos">
+        <MappingFragment StoreEntitySet="departamentos">
+          <ScalarProperty Name="id_departamento" ColumnName="id_departamento" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Visitantes">
+      <EntityTypeMapping TypeName="DB_A1E868_ingresoCTPModel.Visitantes">
+        <MappingFragment StoreEntitySet="Visitantes">
+          <ScalarProperty Name="id_visitante" ColumnName="id_visitante" />
+          <ScalarProperty Name="cedula" ColumnName="cedula" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="apellidos" ColumnName="apellidos" />
+          <ScalarProperty Name="fecha_nacimiento" ColumnName="fecha_nacimiento" />
+          <ScalarProperty Name="fecha_ingreso" ColumnName="fecha_ingreso" />
+          <ScalarProperty Name="placa" ColumnName="placa" />
+          <ScalarProperty Name="id_departamento" ColumnName="id_departamento" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TSE">
+      <EntityTypeMapping TypeName="DB_A1E868_ingresoCTPModel.TSE">
+        <MappingFragment StoreEntitySet="TSE">
+          <ScalarProperty Name="Apellido2" ColumnName="Apellido2" />
+          <ScalarProperty Name="Apellido1" ColumnName="Apellido1" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Sexo" ColumnName="Sexo" />
+          <ScalarProperty Name="D_Electoral" ColumnName="D_Electoral" />
+          <ScalarProperty Name="Cedula" ColumnName="Cedula" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

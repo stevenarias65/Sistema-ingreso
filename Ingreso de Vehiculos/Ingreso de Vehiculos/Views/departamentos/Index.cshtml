@@ -1,0 +1,61 @@
+﻿@model IEnumerable<Ingreso_de_Vehiculos.Models.departamentos>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Departamentos del Colegio</h2>
+
+<p>
+    @Html.ActionLink("Crear nuevo", "Create")
+</p>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title"></h4>
+                    <div class="table-responsive m-t-40">
+                        <table id="example23" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Descripcion</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Descripcion</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                               
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.nombre)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.descripcion)
+                                            </td>
+                                            <td style="text-align:center;"> 
+                                                @Html.ActionLink("Editar", "Edit", new { id = item.id_departamento })
+                                            </td>
+                                        </tr>
+                                    }
+                                  
+                                            
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+

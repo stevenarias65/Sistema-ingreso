@@ -1,0 +1,61 @@
+﻿@model List<Ingreso_de_Vehiculos.Models.Clases.VisitanteMostrar>
+@{
+    ViewBag.Title = "Visor de eventos";
+    DateTime fecha;
+}
+
+<h2>Visor de Eventos</h2>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title"></h4>
+                <div class="table-responsive m-t-40">
+                    <table id="example23" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>Cedula</th>
+                                <th>Fecha de ingreso</th>
+                                <th>hora</th>
+                                <th>Placa</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>Cedula</th>
+                                <th>Fecha de ingreso</th>
+                                <th>hora</th>
+                                <th>Placa</th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td> @item.nombre </td>
+                                    <td>@item.apellidos</td>
+                                    <td>@item.cedula</td>
+                                    @{ 
+                                        fecha = Convert.ToDateTime(item.fecha_ingreso);
+                                        string hora = fecha.ToString("HH:mm:ss");
+                                        string fechasola = fecha.ToString("dd/MM/yyyy");
+                                    }
+                                    <td>@fechasola</td>
+                                    <td>@hora</td>
+                                    <td>@item.placa</td>
+                                </tr>
+                            }
+                           
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+

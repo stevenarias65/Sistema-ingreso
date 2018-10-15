@@ -1,0 +1,208 @@
+﻿@model List<Ingreso_de_Vehiculos.Models.departamentos>
+@{
+    Layout = null;
+    ViewBag.Title = "Index";
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Ingreso de Vehículos</title>
+    <!-- Bootstrap core CSS-->
+    <link href="~/Content/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Custom fonts for this template-->
+    <link href="~/Content/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <!-- Custom styles for this template-->
+    <link href="~/Content/sb-admin.min.css" rel="stylesheet" />
+    <link href="~/Content/toastr.css" rel="stylesheet" />
+    <style>
+        .alert-warning{
+            margin-top :10px;
+        }
+    </style>
+</head>
+
+<body class="bg-dark">
+    <div class="container">
+        @*<center><img class="text-center" width="10%" height="10%" src="~/Content/ImagenesSistema/24062016 011022 am43.png" /></center>*@
+        <div class="card card-register mx-auto mt-lg-5">
+            <div class="card-header text-center"><strong>Control de Vehículos CTP de Puriscal</strong></div>
+            <div class="card-body">
+                <form id="formulariopersonas" role="form" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <label for="exampleInputName"><strong>Número de Cedula (formato sin guiones como aparece en la cedula)</strong></label>
+                                <input class="form-control" id="cedula" name="cedula" type="text" required placeholder="ejemplo 101110135" onblur="buscarCedula()">
+                            </div>
+                            </div>
+                        </div>
+
+                  
+                    <div class="form-row">
+                      
+
+                        <div class="form-group col-md-6">
+                            <label for="exampleInputName"><strong> Nombre de la persona</strong> </label>
+                            <input class="form-control" id="nombre" name="nombre" type="text" required placeholder="Ingresar el nombre de la persona">
+                        </div>
+                       
+
+                        <div class="form-group col-md-6">
+                            <label for="exampleInputName"><strong>Apellido de la persona</strong></label>
+                            <input class="form-control" id="apellidos" name="apellidos" type="text" required placeholder="Ingresar el Apellido de la persona">
+                        </div>
+
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6" style="display: none;" id="alerta1">
+                            <div class="alert alert-warning ">
+                                <strong>advertencia!</strong> Ingrese su nombre
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6 " style="display: none;" id="alerta2">
+                            <div class="alert alert-warning ">
+                                <strong>advertencia!</strong> Ingrese los apellidos
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1"><strong>Departamento a Visitar</strong></label>
+                        <select class="form-control" id="departamento" name="departamento" required>
+                            @foreach (Ingreso_de_Vehiculos.Models.departamentos i in Model)
+                            {
+                                <option value="@i.id_departamento">@i.nombre</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <label for="exampleInputName"><strong>Placa del Vehículo (Opcional si entra con vehículo)</strong></label>
+                                <input class="form-control" id="placa" name="placa" type="text" placeholder="Ingresar la placa del vehículo">
+                            </div>
+                        </div>
+                    </div>
+                    <input class="btn btn-primary btn-block" type="submit" value="Guardar Datos">
+
+                    <div class="text-center">
+
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="~/Content/jquery/jquery.min.js"></script>
+    <script src="~/Content/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="~/Content/jquery-easing/jquery.easing.min.js"></script>
+    <script src="~/Content/Alertify/alertify.min.js"></script>
+    <script src="~/Content/Login/jquery.blockUI.js"></script>
+    <link href="~/Content/toastr.css" rel="stylesheet" />
+    <script src="~/Content/Login/toastr.min.js"></script>
+
+
+    <script>
+        var sexo = 1;
+        var activo = 1;
+        function buscarCedula() {
+            $.blockUI({
+                message: '<h1>Espere por favor...</h1>'
+            });
+            var cedula = $('#cedula').val();
+            var nombre = document.getElementById(nombre)
+            var apellidos = document.getElementById(apellidos)
+            $.ajax({
+                url: "@Url.Action("buscarCedula", "Ingreso")",
+                type: "post",
+            dataType: "json",
+            data: { 'cedula': $('#cedula').val() },
+            success: function (result) {
+                if (result == 0) {
+                    $.unblockUI();
+                    toastr.error('La cedula no se encuentra en la base de datos o esta digitada incorrectamente');
+                    $("#nombre").prop('disabled', false);
+                    $("#apellidos").prop('disabled', false);
+                    $("#alerta1").css("display", "none");
+                    $("#alerta1").show();
+                    $("#alerta2").show();
+                    activo = 0;
+                    
+                } else {
+                    toastr.success('Cedula encontrada');
+                    $.each(result, function (i, item) {
+                        $("#nombre").val(item.nombre);
+                        $("#apellidos").val(item.apellidos);
+                        $("#alerta1").hide();
+                        $("#alerta2").hide();
+                        sexo = item.sexo;
+                        activo = 1;
+                    });
+                  
+                    
+                   
+                        $.unblockUI();
+                    
+                }
+
+            }
+        });
+        }
+        $("#formulariopersonas").on("submit", function (e) {
+    try {
+        e.preventDefault();
+        $.blockUI({
+            message: '<h1>Espere por favor...</h1>'
+        });
+        var f = $(this);
+        var formData = new FormData(document.getElementById("formulariopersonas"));
+        formData.append("activo", activo);
+
+        $.ajax({
+            url: "@Url.Action("GuardarPersonas", "Ingreso")",
+            type: "post",
+            dataType: "html",
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (x) {
+                if (x == 1) {
+                    $('#formulariopersonas')[0].reset();
+                    toastr.success('Visitante ingresado correctamente');
+                    $("#alerta1").hide();
+                    $("#alerta2").hide();
+                    $.unblockUI();
+                } else {
+                    toastr.error('Error, intente de nuevo');
+                    $("#alerta1").hide();
+                    $("#alerta2").hide();
+                    $.unblockUI();
+                }
+
+            }
+        });
+
+    } catch (e) {
+        $.unblockUI();
+        alert("mal");
+
+    }
+});
+    </script>
+
+</body>
+
+</html>
+
+

@@ -1,0 +1,227 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DB_A1E868_ingresoCTPModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Colegio">
+          <Key>
+            <PropertyRef Name="Id_Colegio" />
+          </Key>
+          <Property Name="Id_Colegio" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre_colegio" Type="varchar" MaxLength="100" />
+          <Property Name="descripcion" Type="varchar" MaxLength="1024" />
+          <Property Name="url_imagen" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="departamentos">
+          <Key>
+            <PropertyRef Name="id_departamento" />
+          </Key>
+          <Property Name="id_departamento" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="200" />
+          <Property Name="descripcion" Type="varchar" MaxLength="1024" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DB_A1E868_ingresoCTP.dbo.TSE' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TSE">
+          <Key>
+            <PropertyRef Name="Cedula" />
+            <PropertyRef Name="Nombre" />
+          </Key>
+          <Property Name="Cedula" Type="char" MaxLength="9" Nullable="false" />
+          <Property Name="D_Electoral" Type="int" />
+          <Property Name="Sexo" Type="int" />
+          <Property Name="Nombre" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Apellido1" Type="varchar" MaxLength="30" />
+          <Property Name="Apellido2" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="Visitantes">
+          <Key>
+            <PropertyRef Name="id_visitante" />
+          </Key>
+          <Property Name="id_visitante" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cedula" Type="varchar" MaxLength="20" />
+          <Property Name="nombre" Type="varchar" MaxLength="200" />
+          <Property Name="apellidos" Type="varchar" MaxLength="200" />
+          <Property Name="fecha_nacimiento" Type="date" />
+          <Property Name="fecha_ingreso" Type="datetime" />
+          <Property Name="placa" Type="varchar" MaxLength="200" />
+          <Property Name="id_departamento" Type="int" />
+        </EntityType>
+        <Association Name="FK__Visitante__id_de__276EDEB3">
+          <End Role="departamentos" Type="Self.departamentos" Multiplicity="0..1" />
+          <End Role="Visitantes" Type="Self.Visitantes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="departamentos">
+              <PropertyRef Name="id_departamento" />
+            </Principal>
+            <Dependent Role="Visitantes">
+              <PropertyRef Name="id_departamento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DB_A1E868_ingresoCTPModelStoreContainer">
+          <EntitySet Name="Colegio" EntityType="Self.Colegio" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="departamentos" EntityType="Self.departamentos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Visitantes" EntityType="Self.Visitantes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TSE" EntityType="Self.TSE" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [TSE].[Cedula] AS [Cedula], 
+    [TSE].[D_Electoral] AS [D_Electoral], 
+    [TSE].[Sexo] AS [Sexo], 
+    [TSE].[Nombre] AS [Nombre], 
+    [TSE].[Apellido1] AS [Apellido1], 
+    [TSE].[Apellido2] AS [Apellido2]
+    FROM [dbo].[TSE] AS [TSE]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__Visitante__id_de__276EDEB3" Association="Self.FK__Visitante__id_de__276EDEB3">
+            <End Role="departamentos" EntitySet="departamentos" />
+            <End Role="Visitantes" EntitySet="Visitantes" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DB_A1E868_ingresoCTPModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Colegio">
+          <Key>
+            <PropertyRef Name="Id_Colegio" />
+          </Key>
+          <Property Name="Id_Colegio" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre_colegio" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="descripcion" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
+          <Property Name="url_imagen" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="departamentos">
+          <Key>
+            <PropertyRef Name="id_departamento" />
+          </Key>
+          <Property Name="id_departamento" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="descripcion" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Visitantes" Relationship="Self.FK__Visitante__id_de__276EDEB3" FromRole="departamentos" ToRole="Visitantes" />
+        </EntityType>
+        <EntityType Name="Visitantes">
+          <Key>
+            <PropertyRef Name="id_visitante" />
+          </Key>
+          <Property Name="id_visitante" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cedula" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="nombre" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="apellidos" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="fecha_nacimiento" Type="DateTime" Precision="0" />
+          <Property Name="fecha_ingreso" Type="DateTime" Precision="3" />
+          <Property Name="placa" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="id_departamento" Type="Int32" />
+          <NavigationProperty Name="departamentos" Relationship="Self.FK__Visitante__id_de__276EDEB3" FromRole="Visitantes" ToRole="departamentos" />
+        </EntityType>
+        <Association Name="FK__Visitante__id_de__276EDEB3">
+          <End Role="departamentos" Type="Self.departamentos" Multiplicity="0..1" />
+          <End Role="Visitantes" Type="Self.Visitantes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="departamentos">
+              <PropertyRef Name="id_departamento" />
+            </Principal>
+            <Dependent Role="Visitantes">
+              <PropertyRef Name="id_departamento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DB_A1E868_ingresoCTPEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Colegio" EntityType="Self.Colegio" />
+          <EntitySet Name="departamentos" EntityType="Self.departamentos" />
+          <EntitySet Name="Visitantes" EntityType="Self.Visitantes" />
+          <AssociationSet Name="FK__Visitante__id_de__276EDEB3" Association="Self.FK__Visitante__id_de__276EDEB3">
+            <End Role="departamentos" EntitySet="departamentos" />
+            <End Role="Visitantes" EntitySet="Visitantes" />
+          </AssociationSet>
+          <EntitySet Name="TSE" EntityType="DB_A1E868_ingresoCTPModel.TSE" />
+        </EntityContainer>
+        <EntityType Name="TSE">
+          <Key>
+            <PropertyRef Name="Cedula" />
+            <PropertyRef Name="Nombre" />
+          </Key>
+          <Property Name="Cedula" Type="String" Nullable="false" MaxLength="9" FixedLength="true" Unicode="false" />
+          <Property Name="D_Electoral" Type="Int32" />
+          <Property Name="Sexo" Type="Int32" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Apellido1" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Apellido2" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DB_A1E868_ingresoCTPModelStoreContainer" CdmEntityContainer="DB_A1E868_ingresoCTPEntities">
+          <EntitySetMapping Name="Colegio">
+            <EntityTypeMapping TypeName="DB_A1E868_ingresoCTPModel.Colegio">
+              <MappingFragment StoreEntitySet="Colegio">
+                <ScalarProperty Name="Id_Colegio" ColumnName="Id_Colegio" />
+                <ScalarProperty Name="nombre_colegio" ColumnName="nombre_colegio" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="url_imagen" ColumnName="url_imagen" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="departamentos">
+            <EntityTypeMapping TypeName="DB_A1E868_ingresoCTPModel.departamentos">
+              <MappingFragment StoreEntitySet="departamentos">
+                <ScalarProperty Name="id_departamento" ColumnName="id_departamento" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Visitantes">
+            <EntityTypeMapping TypeName="DB_A1E868_ingresoCTPModel.Visitantes">
+              <MappingFragment StoreEntitySet="Visitantes">
+                <ScalarProperty Name="id_visitante" ColumnName="id_visitante" />
+                <ScalarProperty Name="cedula" ColumnName="cedula" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="apellidos" ColumnName="apellidos" />
+                <ScalarProperty Name="fecha_nacimiento" ColumnName="fecha_nacimiento" />
+                <ScalarProperty Name="fecha_ingreso" ColumnName="fecha_ingreso" />
+                <ScalarProperty Name="placa" ColumnName="placa" />
+                <ScalarProperty Name="id_departamento" ColumnName="id_departamento" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TSE">
+            <EntityTypeMapping TypeName="DB_A1E868_ingresoCTPModel.TSE">
+              <MappingFragment StoreEntitySet="TSE">
+                <ScalarProperty Name="Apellido2" ColumnName="Apellido2" />
+                <ScalarProperty Name="Apellido1" ColumnName="Apellido1" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Sexo" ColumnName="Sexo" />
+                <ScalarProperty Name="D_Electoral" ColumnName="D_Electoral" />
+                <ScalarProperty Name="Cedula" ColumnName="Cedula" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

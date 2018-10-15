@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DB_A1E868_ingresoCTPModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Colegio">
+    <Key>
+      <PropertyRef Name="Id_Colegio" />
+    </Key>
+    <Property Name="Id_Colegio" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre_colegio" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="descripcion" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
+    <Property Name="url_imagen" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="departamentos">
+    <Key>
+      <PropertyRef Name="id_departamento" />
+    </Key>
+    <Property Name="id_departamento" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="descripcion" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Visitantes" Relationship="Self.FK__Visitante__id_de__276EDEB3" FromRole="departamentos" ToRole="Visitantes" />
+  </EntityType>
+  <EntityType Name="Visitantes">
+    <Key>
+      <PropertyRef Name="id_visitante" />
+    </Key>
+    <Property Name="id_visitante" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="cedula" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="nombre" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="apellidos" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="fecha_nacimiento" Type="DateTime" Precision="0" />
+    <Property Name="fecha_ingreso" Type="DateTime" Precision="3" />
+    <Property Name="placa" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="id_departamento" Type="Int32" />
+    <NavigationProperty Name="departamentos" Relationship="Self.FK__Visitante__id_de__276EDEB3" FromRole="Visitantes" ToRole="departamentos" />
+  </EntityType>
+  <Association Name="FK__Visitante__id_de__276EDEB3">
+    <End Role="departamentos" Type="Self.departamentos" Multiplicity="0..1" />
+    <End Role="Visitantes" Type="Self.Visitantes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="departamentos">
+        <PropertyRef Name="id_departamento" />
+      </Principal>
+      <Dependent Role="Visitantes">
+        <PropertyRef Name="id_departamento" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DB_A1E868_ingresoCTPEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Colegio" EntityType="Self.Colegio" />
+    <EntitySet Name="departamentos" EntityType="Self.departamentos" />
+    <EntitySet Name="Visitantes" EntityType="Self.Visitantes" />
+    <AssociationSet Name="FK__Visitante__id_de__276EDEB3" Association="Self.FK__Visitante__id_de__276EDEB3">
+      <End Role="departamentos" EntitySet="departamentos" />
+      <End Role="Visitantes" EntitySet="Visitantes" />
+    </AssociationSet>
+    <EntitySet Name="TSE" EntityType="DB_A1E868_ingresoCTPModel.TSE" />
+  </EntityContainer>
+  <EntityType Name="TSE">
+    <Key>
+      <PropertyRef Name="Cedula" />
+      <PropertyRef Name="Nombre" />
+    </Key>
+    <Property Name="Cedula" Type="String" Nullable="false" MaxLength="9" FixedLength="true" Unicode="false" />
+    <Property Name="D_Electoral" Type="Int32" />
+    <Property Name="Sexo" Type="Int32" />
+    <Property Name="Nombre" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="Apellido1" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="Apellido2" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+  </EntityType>
+</Schema>

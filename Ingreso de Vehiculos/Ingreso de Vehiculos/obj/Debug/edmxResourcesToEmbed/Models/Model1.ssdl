@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DB_A1E868_ingresoCTPModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Colegio">
+    <Key>
+      <PropertyRef Name="Id_Colegio" />
+    </Key>
+    <Property Name="Id_Colegio" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre_colegio" Type="varchar" MaxLength="100" />
+    <Property Name="descripcion" Type="varchar" MaxLength="1024" />
+    <Property Name="url_imagen" Type="varchar" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="departamentos">
+    <Key>
+      <PropertyRef Name="id_departamento" />
+    </Key>
+    <Property Name="id_departamento" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="200" />
+    <Property Name="descripcion" Type="varchar" MaxLength="1024" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'DB_A1E868_ingresoCTP.dbo.TSE' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="TSE">
+    <Key>
+      <PropertyRef Name="Cedula" />
+      <PropertyRef Name="Nombre" />
+    </Key>
+    <Property Name="Cedula" Type="char" MaxLength="9" Nullable="false" />
+    <Property Name="D_Electoral" Type="int" />
+    <Property Name="Sexo" Type="int" />
+    <Property Name="Nombre" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="Apellido1" Type="varchar" MaxLength="30" />
+    <Property Name="Apellido2" Type="varchar" MaxLength="30" />
+  </EntityType>
+  <EntityType Name="Visitantes">
+    <Key>
+      <PropertyRef Name="id_visitante" />
+    </Key>
+    <Property Name="id_visitante" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="cedula" Type="varchar" MaxLength="20" />
+    <Property Name="nombre" Type="varchar" MaxLength="200" />
+    <Property Name="apellidos" Type="varchar" MaxLength="200" />
+    <Property Name="fecha_nacimiento" Type="date" />
+    <Property Name="fecha_ingreso" Type="datetime" />
+    <Property Name="placa" Type="varchar" MaxLength="200" />
+    <Property Name="id_departamento" Type="int" />
+  </EntityType>
+  <Association Name="FK__Visitante__id_de__276EDEB3">
+    <End Role="departamentos" Type="Self.departamentos" Multiplicity="0..1" />
+    <End Role="Visitantes" Type="Self.Visitantes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="departamentos">
+        <PropertyRef Name="id_departamento" />
+      </Principal>
+      <Dependent Role="Visitantes">
+        <PropertyRef Name="id_departamento" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DB_A1E868_ingresoCTPModelStoreContainer">
+    <EntitySet Name="Colegio" EntityType="Self.Colegio" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="departamentos" EntityType="Self.departamentos" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Visitantes" EntityType="Self.Visitantes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TSE" EntityType="Self.TSE" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [TSE].[Cedula] AS [Cedula], 
+    [TSE].[D_Electoral] AS [D_Electoral], 
+    [TSE].[Sexo] AS [Sexo], 
+    [TSE].[Nombre] AS [Nombre], 
+    [TSE].[Apellido1] AS [Apellido1], 
+    [TSE].[Apellido2] AS [Apellido2]
+    FROM [dbo].[TSE] AS [TSE]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK__Visitante__id_de__276EDEB3" Association="Self.FK__Visitante__id_de__276EDEB3">
+      <End Role="departamentos" EntitySet="departamentos" />
+      <End Role="Visitantes" EntitySet="Visitantes" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
